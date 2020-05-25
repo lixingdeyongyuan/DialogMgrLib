@@ -1,0 +1,2 @@
+include ':app', ':dialogmgr'
+rootProject.name='DialogMgrLib'
