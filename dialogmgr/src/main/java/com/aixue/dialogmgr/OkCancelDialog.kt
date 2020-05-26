@@ -1,8 +1,14 @@
 package com.aixue.dialogmgr
 
-class OkCancelDialog {
+import android.app.Dialog
+import android.content.Context
+import android.os.Bundle
 
-    class OkCancelDialogBean :BaseDialogBean(){
+class OkCancelDialog(context: Context) : Dialog(context) {
 
+    class OkCancelDialogBean : BaseDialogBuilder() {
+        override fun createDialog(context: Context, bundle: Bundle?): Dialog {
+            return OkCancelDialog(context)
+        }
     }
 }

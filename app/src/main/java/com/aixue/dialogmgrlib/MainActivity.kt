@@ -3,15 +3,12 @@ package com.aixue.dialogmgrlib
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.aixue.dialogmgr.BaseDialogFragment
 import com.aixue.dialogmgr.DialogMgr
 import com.aixue.dialogmgr.LoadingDialog
-import com.aixue.dialogmgr.OkCancelDialog
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : AppCompatActivity(){
-
+class MainActivity : AppCompatActivity() {
 
 
     private lateinit var mDialogMgr: DialogMgr
@@ -19,12 +16,12 @@ class MainActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         Log.d("rlog", "MainActivity $this")
-
+        mDialogMgr = DialogMgr(this.supportFragmentManager)
         haha.setOnClickListener {
-            var dialogFragment = BaseDialogFragment()
-            dialogFragment.show(supportFragmentManager, "test")
-            mDialogMgr.show(LoadingDialog.LoadingDialogHaha())
-            mDialogMgr.show(OkCancelDialog.OkCancelDialogBean())
+            //            var dialogFragment = BaseDialogFragment()
+//            dialogFragment.show(supportFragmentManager, "test")
+            mDialogMgr.show(LoadingDialog.LoadingDialogBuilder())
+//            mDialogMgr.show(OkCancelDialog.OkCancelDialogBean())
 //            var builder = AlertDialog.Builder(this).setIcon(R.mipmap.ic_launcher).setTitle("最普通dialog")
 //                .setMessage("我是最简单的dialog").setPositiveButton("确定（积极）",
 //                    DialogInterface.OnClickListener { dialogInterface, i ->

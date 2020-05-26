@@ -9,27 +9,13 @@ class LoadingDialog constructor(context: Context) : Dialog(context) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // 这里获取bundle
-
+        setContentView(R.layout.layout_paying_dialog)
+        window?.setBackgroundDrawable(null)
     }
-//    fun newInstance() {
-//        var builder = AlertDialog.Builder(this).setTitle("最普通dialog")
-//            .setMessage("我是最简单的dialog").setPositiveButton("确定（积极）",
-//                DialogInterface.OnClickListener { dialogInterface, i ->
-//                    //ToDo: 你想做的事情
-//                    Toast.makeText(this, "确定按钮", Toast.LENGTH_LONG).show()
-//                }).setNegativeButton("取消（消极）",
-//                DialogInterface.OnClickListener { dialogInterface, i ->
-//                    //ToDo: 你想做的事情
-//                    Toast.makeText(this, "关闭按钮", Toast.LENGTH_LONG).show()
-//                    dialogInterface.closeCurAndOpenNext()
-//                }).setOnDismissListener {
-//                Log.d("rlog", "onDismiss")
-//            }
-//        val dialog = builder.create()
-//    }
 
-    //
-     class LoadingDialogHaha: BaseDialogBean() {
-
-     }
+    class LoadingDialogBuilder : BaseDialogBuilder() {
+        override fun createDialog(context: Context,bundle: Bundle?): Dialog {
+            return LoadingDialog(context)
+        }
+    }
 }
