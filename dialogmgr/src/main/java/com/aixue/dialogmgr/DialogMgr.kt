@@ -1,6 +1,5 @@
 package com.aixue.dialogmgr
 
-import android.util.Log
 import androidx.fragment.app.FragmentManager
 
 // 作用是什么？为什么这么写？如果写在同一个类中，类会爆炸？不写在同一个类中，又如何实现
@@ -17,36 +16,63 @@ class DialogMgr(var mFragmentManager: FragmentManager) {
         DialogMgrList.removeDialogMgr(this)
     }
 
-    // 实例与展示
-    private var mList: ArrayList<BaseDialogBuilder> = ArrayList<BaseDialogBuilder>()
+    private var mLinkedHashMap: LinkedHashMap<String, BaseDialogBuilder> =
+        LinkedHashMap<String, BaseDialogBuilder>()
 
+    // 展示
     fun show(bean: BaseDialogBuilder) {
-        // 这里有顺序；如果是同一个level的话，level越大越厉害。就会弹在最上面。如果小于这个level，就会被放在后边
-        // 这里添加以后
-        mList.add(bean)
-        // 这里是创建
-        bean.createBaseDialogFragment(mFragmentManager)
-    }
-
-    // 关闭当前并打开下一个
-    open fun closeCurAndOpenNext(dialogBuilder: BaseDialogBuilder) {
-        // 拿到数据，
-        var type = 1
-        // 这里如何关闭最新的
-        var bean = mList.removeAt(0)
-        bean.dismiss()
-        // 如果还有的话，就去展示新的；有些没有立即展示就不要展示了
-    }
-
-    // 关闭哪一个
-    fun dismiss(type: Int) {
-        mList.forEach {
-            if (it.mType == type) {
-                it.dismiss()
-                return@forEach
+        // 如果等级最大或等于其他等级就立即展示；小于其他等级就不展示
+        var isImmediatelyShow = true
+        mLinkedHashMap.forEach {
+            if (it.value.mLevel > bean.mLevel) {
+                isImmediatelyShow = false
             }
+        }
+        if (isImmediatelyShow) {
+            bean.createBaseDialogFragment(mFragmentManager)
+        }
+        mLinkedHashMap.put(bean.mKey, bean)
+    }
+
+    fun dismiss(type: Int) {
+        val list = ArrayList<String>()
+        mLinkedHashMap.forEach {
+            if (it.value.mType == type) {
+                list.add(it.key)
+            }
+        }
+        list.forEach {
+            mLinkedHashMap.remove(it)?.dismiss()
         }
     }
 
+    fun dismissLoading() {
+        dismiss(BaseDialogBuilder.DIALOG_TYPE_LOADING)
+    }
+
+    fun dismissOkCancel() {
+        dismiss(BaseDialogBuilder.DIALOG_TYPE_OK_CANCEL)
+    }
+
+    // 响应
+    open fun onDialogDestroy(dialogBuilder: BaseDialogBuilder) {
+        if (dialogBuilder.isCloseCurAndOpenNext()) {
+            mLinkedHashMap.remove(dialogBuilder.mKey)?.dismiss()
+            // 找到最大等级的，如果等级相同，找到位置排在第一位的
+            var maxLevel = Int.MIN_VALUE
+            var key: String? = null
+            mLinkedHashMap.forEach {
+                if (it.value.mLevel > maxLevel) {
+                    maxLevel = it.value.mLevel
+                    key = it.key
+                }
+            }
+            key?.let {
+                mLinkedHashMap.get(it)?.createBaseDialogFragment(mFragmentManager)
+            }
+        } else {
+            mLinkedHashMap.remove(dialogBuilder.mKey)?.dismiss()
+        }
+    }
 
 }

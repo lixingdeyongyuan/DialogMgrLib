@@ -14,6 +14,10 @@ class LoadingDialog constructor(context: Context) : Dialog(context) {
     }
 
     class LoadingDialogBuilder : BaseDialogBuilder() {
+        override fun getType(): Int {
+            return DIALOG_TYPE_LOADING
+        }
+
         override fun createDialog(context: Context,bundle: Bundle?): Dialog {
             return LoadingDialog(context)
         }

@@ -25,22 +25,20 @@ class BaseDialogFragment : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("rlog", "onCreate $this")
+        Log.d("rlog", "BaseDialogFragment onCreate $this")
     }
 
     override fun onDestroy() {
         super.onDestroy()
         mBaseDialogBuilder?.let { baseDialogBuilder ->
-            if (baseDialogBuilder.isCloseCurAndOpenNext()) {
-                this.fragmentManager?.let {
-                    DialogMgrList.getDialogMgr(it)?.closeCurAndOpenNext(baseDialogBuilder)
-                }
+            this.fragmentManager?.let {
+                DialogMgrList.getDialogMgr(it)?.onDialogDestroy(baseDialogBuilder)
             }
         }
         // TODO 这里要发送关闭事件吗？这里还有个问题是，生命周期的问题
         Log.d(
             "rlog",
-            "ondestroy $this，this.fragmentManager=${this.fragmentManager},this.childFragmentManager=${this.childFragmentManager}"
+            "BaseDialogFragment onDestroy $this，this.fragmentManager=${this.fragmentManager},this.childFragmentManager=${this.childFragmentManager}"
         )
     }
 }

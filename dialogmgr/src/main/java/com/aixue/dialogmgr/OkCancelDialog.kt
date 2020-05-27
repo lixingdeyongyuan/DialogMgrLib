@@ -7,6 +7,10 @@ import android.os.Bundle
 class OkCancelDialog(context: Context) : Dialog(context) {
 
     class OkCancelDialogBean : BaseDialogBuilder() {
+        override fun getType(): Int {
+            return DIALOG_TYPE_OK_CANCEL
+        }
+
         override fun createDialog(context: Context, bundle: Bundle?): Dialog {
             return OkCancelDialog(context)
         }
