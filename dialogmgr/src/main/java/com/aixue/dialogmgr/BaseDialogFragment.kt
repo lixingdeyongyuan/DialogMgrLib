@@ -2,7 +2,6 @@ package com.aixue.dialogmgr
 
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.DialogFragment
 
 /**
@@ -23,22 +22,14 @@ class BaseDialogFragment : DialogFragment() {
         return Dialog(this.context!!)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.d("rlog", "BaseDialogFragment onCreate $this")
-    }
 
     override fun onDestroy() {
         super.onDestroy()
+        DialogLog.instance.debug("BaseDialogFragment","$this onDestroy")
         mBaseDialogBuilder?.let { baseDialogBuilder ->
             this.fragmentManager?.let {
                 DialogMgrList.getDialogMgr(it)?.onDialogDestroy(baseDialogBuilder)
             }
         }
-        // TODO 这里要发送关闭事件吗？这里还有个问题是，生命周期的问题
-        Log.d(
-            "rlog",
-            "BaseDialogFragment onDestroy $this，this.fragmentManager=${this.fragmentManager},this.childFragmentManager=${this.childFragmentManager}"
-        )
     }
 }

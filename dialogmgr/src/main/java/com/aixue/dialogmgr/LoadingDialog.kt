@@ -4,12 +4,12 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 
-class LoadingDialog constructor(context: Context) : Dialog(context) {
+class LoadingDialog constructor(context: Context) : BaseDialog(context) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // 这里获取bundle
-        setContentView(R.layout.layout_paying_dialog)
+        setContentView(R.layout.layout_dialog_loading)
         window?.setBackgroundDrawable(null)
     }
 

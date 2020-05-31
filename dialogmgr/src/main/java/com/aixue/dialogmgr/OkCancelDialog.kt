@@ -4,7 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 
-class OkCancelDialog(context: Context) : Dialog(context) {
+class OkCancelDialog(context: Context) : BaseDialog(context) {
 
     class OkCancelDialogBean : BaseDialogBuilder() {
         override fun getType(): Int {
