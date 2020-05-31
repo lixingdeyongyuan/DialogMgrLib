@@ -3,8 +3,9 @@ package com.aixue.dialogmgr
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import com.aixue.dialogmgr.BaseDialogBuilder.Companion.DIALOG_TYPE_LOADING
 
-class LoadingDialog constructor(context: Context) : BaseDialog(context) {
+open class LoadingDialog constructor(context: Context) : BaseDialog(context) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -13,12 +14,12 @@ class LoadingDialog constructor(context: Context) : BaseDialog(context) {
         window?.setBackgroundDrawable(null)
     }
 
-    class LoadingDialogBuilder : BaseDialogBuilder() {
+     open class LoadingDialogBuilder : BaseDialogBuilder() {
         override fun getType(): Int {
             return DIALOG_TYPE_LOADING
         }
 
-        override fun createDialog(context: Context,bundle: Bundle?): Dialog {
+        override fun createDialog(context: Context, bundle: Bundle?): Dialog {
             return LoadingDialog(context)
         }
     }

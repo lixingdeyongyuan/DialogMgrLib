@@ -50,6 +50,10 @@ class DialogMgr(var mFragmentManager: FragmentManager) {
         }
     }
 
+    fun showLoading(){
+        show(LoadingDialog.LoadingDialogBuilder())
+    }
+
     fun dismissLoading() {
         dismiss(BaseDialogBuilder.DIALOG_TYPE_LOADING)
     }
