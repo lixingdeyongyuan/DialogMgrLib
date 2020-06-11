@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@null"
+    android:background="@drawable/dialog_loading_bg"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="10dp">
+    >
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:indeterminateBehavior="repeat"
         android:indeterminateDrawable="@drawable/dialog_loading_xml"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center" />
 
     <TextView
         android:id="@+id/msg"
